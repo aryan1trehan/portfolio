@@ -294,7 +294,7 @@ function Carousel() {
         {/* Nav strip */}
         <div className="seo-nav-strip">
           <button className="seo-nav-btn" onClick={() => goTo(activeIdx - 1)} aria-label="Previous">
-            <svg width="14" height="14" viewBox="0 0 14 14"><path d="M9 2 L4 7 L9 12" stroke="currentColor" strokeWidth="1.4" fill="none" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            <svg width="14" height="14" viewBox="0 0 14 14"><path d="M2 9 L7 4 L12 9" stroke="currentColor" strokeWidth="1.4" fill="none" strokeLinecap="round" strokeLinejoin="round"/></svg>
           </button>
           <div className="seo-folio-strip">
             {SEO_CLIENTS.map((c, i) => (
@@ -305,7 +305,7 @@ function Carousel() {
             ))}
           </div>
           <button className="seo-nav-btn" onClick={() => goTo(activeIdx + 1)} aria-label="Next">
-            <svg width="14" height="14" viewBox="0 0 14 14"><path d="M5 2 L10 7 L5 12" stroke="currentColor" strokeWidth="1.4" fill="none" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            <svg width="14" height="14" viewBox="0 0 14 14"><path d="M2 5 L7 10 L12 5" stroke="currentColor" strokeWidth="1.4" fill="none" strokeLinecap="round" strokeLinejoin="round"/></svg>
           </button>
         </div>
 
@@ -325,7 +325,7 @@ function Carousel() {
 
 // ─── Marquee ─────────────────────────────────────────────────────────────────
 function SeoMarquee() {
-  const items = ['10 brands scaled','★ ★ ★ ★ ★','25,000+ backlinks built','3,000+ keywords ranked','DA growth 45 → 60','↘ AI citations rising','+20% SEO conversion lift','vol. 01','field notes','scroll to read on']
+  const items = ['42 brands scaled','★ ★ ★ ★ ★','25,000+ backlinks built','3,000+ keywords ranked','DA growth 45 → 60','↘ AI citations rising','+20% SEO conversion lift','vol. 01','field notes','scroll to read on']
   return (
     <div className="seo-marquee">
       <div className="seo-marquee-track">
@@ -376,7 +376,7 @@ function Brick({ children, delay = 0, className }: { children: React.ReactNode; 
 // ─── Masthead ─────────────────────────────────────────────────────────────────
 function Masthead() {
   const stats = [
-    { n: '10',     l: 'brands scaled' },
+    { n: '42',     l: 'brands scaled' },
     { n: '25K+',   l: 'backlinks acquired' },
     { n: '3,000+', l: 'keywords ranked' },
     { n: '+20%',   l: 'avg. SEO conversion lift' },
