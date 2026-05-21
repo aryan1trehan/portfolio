@@ -12,6 +12,10 @@ const config: Config = {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      fontFamily: {
+        bebas: ['Bebas Neue', 'cursive'],
+        mono: ['DM Mono', 'monospace'],
+      },
     },
   },
   plugins: [],
