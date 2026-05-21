@@ -56,17 +56,6 @@ export default function HeroSection() {
           pointerEvents: 'none',
         }}
       >
-        <p style={{
-          fontFamily: 'var(--font-dm-mono)',
-          fontSize: 'clamp(10px, 1.1vw, 13px)',
-          letterSpacing: '0.38em',
-          color: 'rgba(255,255,255,0.65)',
-          textTransform: 'uppercase',
-          margin: '0 0 18px',
-        }}>
-          Selected Works · 2024 – 2026
-        </p>
-
         <h1 style={{
           fontFamily: 'var(--font-bebas)',
           fontSize: 'clamp(60px, 11vw, 180px)',
@@ -81,16 +70,6 @@ export default function HeroSection() {
           PORTFOLIO
         </h1>
 
-        <p style={{
-          fontFamily: 'var(--font-dm-mono)',
-          fontSize: 'clamp(10px, 1.1vw, 13px)',
-          letterSpacing: '0.28em',
-          color: 'rgba(255,255,255,0.5)',
-          textTransform: 'uppercase',
-          margin: '22px 0 0',
-        }}>
-          Scroll to explore ↓
-        </p>
       </motion.div>
     </section>
   )
