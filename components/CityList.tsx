@@ -106,18 +106,23 @@ export default function CityList() {
               left: 0,
               x: springX,
               y: springY,
-              width: 300,
-              height: 400,
+              width: 240,
+              height: 240,
               borderRadius: 8,
               overflow: 'hidden',
               pointerEvents: 'none',
               zIndex: 50,
+              background: '#111',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: 16,
             }}
           >
             <img
               src={cities.find((c) => c.name === hoveredCity)?.image}
               alt={hoveredCity}
-              style={{ width: '100%', height: '100%', objectFit: 'contain', background: '#111', padding: '12px' }}
+              style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', display: 'block' }}
             />
           </motion.div>
         )}
