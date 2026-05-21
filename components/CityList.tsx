@@ -117,7 +117,7 @@ export default function CityList() {
             <img
               src={cities.find((c) => c.name === hoveredCity)?.image}
               alt={hoveredCity}
-              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              style={{ width: '100%', height: '100%', objectFit: 'contain', background: '#111', padding: '12px' }}
             />
           </motion.div>
         )}
