@@ -8,11 +8,11 @@ const cities = [
   { id: '02', name: 'Astrotalk',        image: '/clients/astrotalk.png' },
   { id: '03', name: 'boAt',             image: '/clients/boat.png' },
   { id: '04', name: 'BeatO',            image: '/clients/beato.jpg' },
-  { id: '05', name: 'Responsive',       image: 'https://images.unsplash.com/photo-1534351590666-13e3e96b5017?w=600&q=80' },
+  { id: '05', name: 'Responsive',       image: '/clients/responsive.avif' },
   { id: '06', name: 'SVERVE',           image: '/clients/sverve.avif' },
   { id: '07', name: 'Super Kicks',      image: '/clients/superkicks.avif' },
   { id: '08', name: 'True Colors',      image: '/clients/truecolors.avif' },
-  { id: '09', name: 'Threads & Blocks', image: 'https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?w=600&q=80' },
+  { id: '09', name: 'Threads & Blocks', image: '/clients/threadsblocks.avif' },
   { id: '10', name: 'Rangat Jaipur',    image: '/clients/rangat.png' },
 ]
 
