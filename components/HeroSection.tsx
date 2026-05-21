@@ -69,7 +69,7 @@ export default function HeroSection() {
 
         <h1 style={{
           fontFamily: 'var(--font-bebas)',
-          fontSize: 'clamp(100px, 18vw, 260px)',
+          fontSize: 'clamp(60px, 11vw, 180px)',
           lineHeight: 0.88,
           letterSpacing: '0.04em',
           color: '#ffffff',
@@ -78,7 +78,7 @@ export default function HeroSection() {
           textAlign: 'center',
           textShadow: '0 4px 60px rgba(0,0,0,0.5)',
         }}>
-          PORT<br />FOLIO
+          PORTFOLIO
         </h1>
 
         <p style={{
