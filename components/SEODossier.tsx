@@ -346,12 +346,25 @@ function SeoMarquee() {
 
 // ─── Brick reveal ─────────────────────────────────────────────────────────────
 function Brick({ children, delay = 0, className }: { children: React.ReactNode; delay?: number; className?: string }) {
+  const wrapRef = useRef<HTMLDivElement>(null)
+  const [inView, setInView] = useState(false)
+
+  useEffect(() => {
+    const el = wrapRef.current
+    if (!el) return
+    const obs = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setInView(true); obs.disconnect() } },
+      { threshold: 0.05 }
+    )
+    obs.observe(el)
+    return () => obs.disconnect()
+  }, [])
+
   return (
-    <div style={{ overflow: 'hidden' }} className={className}>
+    <div ref={wrapRef} style={{ overflow: 'hidden' }} className={className}>
       <motion.div
         initial={{ y: '105%', opacity: 0 }}
-        whileInView={{ y: '0%', opacity: 1 }}
-        viewport={{ once: true, amount: 0.1 }}
+        animate={inView ? { y: '0%', opacity: 1 } : undefined}
         transition={{ type: 'spring', stiffness: 280, damping: 30, delay }}
       >
         {children}
