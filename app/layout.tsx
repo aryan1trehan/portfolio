@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
-import { Bebas_Neue, DM_Mono, Anton, Instrument_Serif, JetBrains_Mono } from "next/font/google";
+import { Bebas_Neue, DM_Mono, Anton, Instrument_Serif, JetBrains_Mono, Bricolage_Grotesque } from "next/font/google";
 import "./globals.css";
 import "./seo-dossier.css";
+import "./splash.css";
 import Cursor from "@/components/Cursor";
+import SplashWrapper from "@/components/SplashWrapper";
 
 const bebasNeue = Bebas_Neue({
   weight: "400",
@@ -37,6 +39,12 @@ const jetbrainsMono = JetBrains_Mono({
   display: "swap",
 });
 
+const bricolageGrotesque = Bricolage_Grotesque({
+  subsets: ["latin"],
+  variable: "--font-bricolage",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "Aryan — Portfolio",
   description: "Cinematic portfolio",
@@ -49,9 +57,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${bebasNeue.variable} ${dmMono.variable}`}>
+      <body className={`${bebasNeue.variable} ${dmMono.variable} ${bricolageGrotesque.variable}`}>
         <Cursor />
-        {children}
+        <SplashWrapper>
+          {children}
+        </SplashWrapper>
       </body>
     </html>
   );
