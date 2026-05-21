@@ -4,14 +4,14 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence, useMotionValue, useSpring } from 'motion/react'
 
 const cities = [
-  { id: '01', name: 'Amthor',           image: 'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=600&q=80' },
+  { id: '01', name: 'Amthor',           image: '/clients/amthor.avif' },
   { id: '02', name: 'Astrotalk',        image: '/clients/astrotalk.png' },
   { id: '03', name: 'boAt',             image: '/clients/boat.png' },
   { id: '04', name: 'BeatO',            image: '/clients/beato.jpg' },
   { id: '05', name: 'Responsive',       image: 'https://images.unsplash.com/photo-1534351590666-13e3e96b5017?w=600&q=80' },
-  { id: '06', name: 'SVERVE',           image: 'https://images.unsplash.com/photo-1587330979470-3595ac045ab0?w=600&q=80' },
-  { id: '07', name: 'Super Kicks',      image: 'https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=600&q=80' },
-  { id: '08', name: 'True Colors',      image: 'https://images.unsplash.com/photo-1538485399081-7191377e8241?w=600&q=80' },
+  { id: '06', name: 'SVERVE',           image: '/clients/sverve.avif' },
+  { id: '07', name: 'Super Kicks',      image: '/clients/superkicks.avif' },
+  { id: '08', name: 'True Colors',      image: '/clients/truecolors.avif' },
   { id: '09', name: 'Threads & Blocks', image: 'https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?w=600&q=80' },
   { id: '10', name: 'Rangat Jaipur',    image: '/clients/rangat.png' },
 ]
