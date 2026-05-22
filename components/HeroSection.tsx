@@ -69,6 +69,17 @@ export default function HeroSection() {
         }}>
           Enhanccee Workfolio
         </h1>
+        <p style={{
+          fontFamily: 'var(--font-bebas)',
+          fontSize: 'clamp(22px, 3.5vw, 52px)',
+          letterSpacing: '0.12em',
+          color: '#ffffff',
+          margin: '10px 0 0',
+          textAlign: 'center',
+          opacity: 0.85,
+        }}>
+          (SEO)
+        </p>
 
       </motion.div>
     </section>
