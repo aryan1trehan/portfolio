@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef, useLayoutEffect, useCallback } from 'react'
-import { motion } from 'motion/react'
+import { motion, AnimatePresence } from 'motion/react'
 import '../app/seo-dossier.css'
 
 // ─── Types ───────────────────────────────────────────────────────────────────
@@ -188,8 +188,8 @@ function Spread({ client, index, isActive }: { client: Client; index: number; is
   )
 }
 
-// ─── Carousel — scroll-jacked (vertical scroll → horizontal RAF lerp) ─────────
-function Carousel() {
+// ─── Carousel Desktop (scroll-jacked) ────────────────────────────────────────
+function CarouselDesktop() {
   const wrapRef   = useRef<HTMLDivElement>(null)
   const stickyRef = useRef<HTMLDivElement>(null)
   const trackRef  = useRef<HTMLDivElement>(null)
@@ -197,34 +197,22 @@ function Carousel() {
   const [progress,  setProgress]  = useState(0)
   const translateRef = useRef(0)
   const targetRef    = useRef(0)
-
   const total = SEO_CLIENTS.length
-  const wrapHeight = `calc(${total} * 100vh)`
-  const LERP = 0.18
+  const LERP  = 0.18
 
   useEffect(() => {
-    const wrap   = wrapRef.current
-    const sticky = stickyRef.current
-    const track  = trackRef.current
+    const wrap = wrapRef.current, sticky = stickyRef.current, track = trackRef.current
     if (!wrap || !sticky || !track) return
-
     let raf = 0
-
     const update = () => {
       const rect = wrap.getBoundingClientRect()
-      const vh   = window.innerHeight
-      const scrolled  = -rect.top
-      const maxScroll = rect.height - vh
+      const scrolled = -rect.top, maxScroll = rect.height - window.innerHeight
       const p = Math.max(0, Math.min(1, scrolled / maxScroll))
       setProgress(p)
-
-      const trackW    = track.scrollWidth
-      const viewportW = sticky.clientWidth
-      const maxTx     = Math.max(0, trackW - viewportW)
+      const maxTx = Math.max(0, track.scrollWidth - sticky.clientWidth)
       targetRef.current = p * maxTx
-
       const cards = track.querySelectorAll<HTMLElement>('[data-spread]')
-      const center = translateRef.current + viewportW / 2
+      const center = translateRef.current + sticky.clientWidth / 2
       let best = 0, bestDist = Infinity
       cards.forEach((c, i) => {
         const d = Math.abs(c.offsetLeft + c.offsetWidth / 2 - center)
@@ -232,43 +220,30 @@ function Carousel() {
       })
       setActiveIdx(best)
     }
-
     const tick = () => {
       const diff = targetRef.current - translateRef.current
       if (Math.abs(diff) > 0.1) translateRef.current += diff * LERP
       else translateRef.current = targetRef.current
-      if (track) track.style.transform = `translate3d(${-translateRef.current}px, 0, 0)`
+      track.style.transform = `translate3d(${-translateRef.current}px, 0, 0)`
       raf = requestAnimationFrame(tick)
     }
-
-    update()
-    tick()
+    update(); tick()
     window.addEventListener('scroll', update, { passive: true })
     window.addEventListener('resize', update)
-    return () => {
-      cancelAnimationFrame(raf)
-      window.removeEventListener('scroll', update)
-      window.removeEventListener('resize', update)
-    }
+    return () => { cancelAnimationFrame(raf); window.removeEventListener('scroll', update); window.removeEventListener('resize', update) }
   }, [])
 
   const goTo = useCallback((i: number) => {
-    const wrap   = wrapRef.current
-    const sticky = stickyRef.current
-    const track  = trackRef.current
+    const wrap = wrapRef.current, sticky = stickyRef.current, track = trackRef.current
     if (!wrap || !sticky || !track) return
     const clamped = Math.max(0, Math.min(total - 1, i))
     const cards = track.querySelectorAll<HTMLElement>('[data-spread]')
-    const card  = cards[clamped]
-    if (!card) return
-    const trackW    = track.scrollWidth
-    const viewportW = sticky.clientWidth
-    const maxTx     = Math.max(1, trackW - viewportW)
-    const desiredTx = Math.max(0, Math.min(maxTx, card.offsetLeft - (viewportW - card.offsetWidth) / 2))
+    const card = cards[clamped]; if (!card) return
+    const maxTx = Math.max(1, track.scrollWidth - sticky.clientWidth)
+    const desiredTx = Math.max(0, Math.min(maxTx, card.offsetLeft - (sticky.clientWidth - card.offsetWidth) / 2))
     const p = desiredTx / maxTx
-    const wrapTop   = wrap.getBoundingClientRect().top + window.scrollY
-    const maxScroll = wrap.getBoundingClientRect().height - window.innerHeight
-    window.scrollTo({ top: wrapTop + p * maxScroll, behavior: 'smooth' })
+    const wrapTop = wrap.getBoundingClientRect().top + window.scrollY
+    window.scrollTo({ top: wrapTop + p * (wrap.getBoundingClientRect().height - window.innerHeight), behavior: 'smooth' })
   }, [total])
 
   useEffect(() => {
@@ -281,17 +256,13 @@ function Carousel() {
   }, [activeIdx, goTo])
 
   return (
-    <div ref={wrapRef} style={{ position: 'relative', height: wrapHeight }}>
+    <div ref={wrapRef} style={{ position: 'relative', height: `calc(${total} * 100vh)` }}>
       <div ref={stickyRef} className="seo-sticky">
         <div ref={trackRef} className="seo-track">
           <div className="seo-rail-spacer" />
-          {SEO_CLIENTS.map((c, i) => (
-            <Spread key={c.id} client={c} index={i} isActive={i === activeIdx} />
-          ))}
+          {SEO_CLIENTS.map((c, i) => <Spread key={c.id} client={c} index={i} isActive={i === activeIdx} />)}
           <div className="seo-rail-spacer" />
         </div>
-
-        {/* Nav strip */}
         <div className="seo-nav-strip">
           <button className="seo-nav-btn" onClick={() => goTo(activeIdx - 1)} aria-label="Previous">
             <svg width="14" height="14" viewBox="0 0 14 14"><path d="M2 9 L7 4 L12 9" stroke="currentColor" strokeWidth="1.4" fill="none" strokeLinecap="round" strokeLinejoin="round"/></svg>
@@ -308,12 +279,9 @@ function Carousel() {
             <svg width="14" height="14" viewBox="0 0 14 14"><path d="M2 5 L7 10 L12 5" stroke="currentColor" strokeWidth="1.4" fill="none" strokeLinecap="round" strokeLinejoin="round"/></svg>
           </button>
         </div>
-
         <div className="seo-progress-bar">
           <div className="seo-progress-fill" style={{ width: `${progress * 100}%` }} />
         </div>
-
-        {/* Scroll hint */}
         <div className="seo-scroll-hint" style={{ opacity: progress < 0.04 ? 1 : 0 }}>
           <span>scroll</span>
           <svg width="36" height="10" viewBox="0 0 36 10"><path d="M2 5 L30 5 M24 1 L30 5 L24 9" stroke="currentColor" strokeWidth="1.2" fill="none" strokeLinecap="round" strokeLinejoin="round"/></svg>
@@ -321,6 +289,74 @@ function Carousel() {
       </div>
     </div>
   )
+}
+
+// ─── Carousel Mobile (swipe-driven) ──────────────────────────────────────────
+function CarouselMobile() {
+  const [activeIdx, setActiveIdx] = useState(0)
+  const [dir, setDir] = useState(1)
+  const touchStartX = useRef(0)
+  const total = SEO_CLIENTS.length
+
+  const goTo = useCallback((next: number) => {
+    const clamped = Math.max(0, Math.min(total - 1, next))
+    setDir(next > activeIdx ? 1 : -1)
+    setActiveIdx(clamped)
+  }, [activeIdx, total])
+
+  const onTouchStart = (e: React.TouchEvent) => { touchStartX.current = e.touches[0].clientX }
+  const onTouchEnd   = (e: React.TouchEvent) => {
+    const dx = touchStartX.current - e.changedTouches[0].clientX
+    if (Math.abs(dx) < 40) return
+    goTo(dx > 0 ? activeIdx + 1 : activeIdx - 1)
+  }
+
+  return (
+    <div
+      className="seo-sticky"
+      style={{ position: 'relative', height: '100vh', touchAction: 'pan-y' }}
+      onTouchStart={onTouchStart}
+      onTouchEnd={onTouchEnd}
+    >
+      <AnimatePresence mode="wait" custom={dir}>
+        <motion.div
+          key={activeIdx}
+          custom={dir}
+          initial={{ x: dir * 300, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          exit={{ x: dir * -300, opacity: 0 }}
+          transition={{ duration: 0.35, ease: [0.23, 1, 0.32, 1] }}
+          style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0 12px' }}
+        >
+          <Spread client={SEO_CLIENTS[activeIdx]} index={activeIdx} isActive={true} />
+        </motion.div>
+      </AnimatePresence>
+
+      {/* Dot nav */}
+      <div style={{ position: 'absolute', bottom: 56, left: 0, right: 0, display: 'flex', justifyContent: 'center', gap: 6, zIndex: 10 }}>
+        {SEO_CLIENTS.map((_, i) => (
+          <button key={i} onClick={() => goTo(i)} style={{ width: i === activeIdx ? 18 : 6, height: 6, borderRadius: 3, background: i === activeIdx ? 'var(--seo-accent)' : 'rgba(244,239,227,0.2)', border: 'none', padding: 0, cursor: 'pointer', transition: 'all 0.3s ease' }} />
+        ))}
+      </div>
+
+      {/* Swipe hint */}
+      <div style={{ position: 'absolute', bottom: 28, left: 0, right: 0, textAlign: 'center', fontFamily: 'var(--seo-mono)', fontSize: 10, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--seo-ink-soft)', opacity: activeIdx === 0 ? 1 : 0, transition: 'opacity 0.4s' }}>
+        ← swipe to navigate →
+      </div>
+    </div>
+  )
+}
+
+// ─── Carousel (switches on screen width) ─────────────────────────────────────
+function Carousel() {
+  const [isMobile, setIsMobile] = useState(false)
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768)
+    check()
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
+  }, [])
+  return isMobile ? <CarouselMobile /> : <CarouselDesktop />
 }
 
 // ─── Marquee ─────────────────────────────────────────────────────────────────
