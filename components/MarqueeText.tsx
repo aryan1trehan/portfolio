@@ -1,10 +1,10 @@
 'use client'
 
 const rows = [
-  { words: ['CREATIVE', 'DESIGN', 'MOTION', 'STUDIO'], direction: -1 },
-  { words: ['PORTFOLIO', 'VISUAL', 'CRAFT', 'DIGITAL'], direction: 1 },
-  { words: ['EXPERIENCE', 'INTERFACE', 'AESTHETIC', 'BUILD'], direction: -1 },
-  { words: ['FRONTEND', 'ANIMATION', 'CODE', 'IDENTITY'], direction: 1 },
+  { words: ['OPTIMIZATION', 'RANKING', 'INDEXING', 'VISIBILITY'], direction: -1 },
+  { words: ['SEO', 'AEO', 'GEO', 'OPTIMIZATION'], direction: 1 },
+  { words: ['RANKING', 'VISIBILITY', 'SEO', 'INDEXING'], direction: -1 },
+  { words: ['AEO', 'GEO', 'RANKING', 'OPTIMIZATION'], direction: 1 },
 ]
 
 export default function MarqueeText() {
